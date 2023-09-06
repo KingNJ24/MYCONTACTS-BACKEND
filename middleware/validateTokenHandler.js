@@ -8,7 +8,7 @@ const validateToken = asyncHandler(async (req, res, next) => {
     token = authHeader.split(' ')[1];
     try {
       const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-      req.user = decoded; // Store the decoded token in the request object
+      req.user = decoded.user; // Store the decoded token in the request object
       console.log(decoded);
       next(); // Call next to proceed with the next middleware or route handler.
     } catch (err) {

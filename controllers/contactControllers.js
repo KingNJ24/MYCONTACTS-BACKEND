@@ -25,18 +25,25 @@ const getContact = asyncHandler(async (req, res) => {
 //@desc create new contact
 //@route POST /api/contacts/
 //@access private
-const createContact =asyncHandler( async (req,res)=>{
+//@desc create new contact
+//@route POST /api/contacts/
+//@access private
+const createContact = asyncHandler(async (req, res) => {
     console.log(req.body);
-    const {name, email, phone }= req.body;
-    if(!name||!email||!phone){
-        res.status(401)
-        throw new Error("<h1>All fields are required")
+    const { name, email, phone } = req.body;
+    if (!name || !email || !phone) {
+        res.status(400).json({ error: 'All fields are required' }); // Corrected the status code and response format
+        return; // Added to exit the function after sending the response
     }
     const contact = await Contact.create({
-        name,email,phone, user_id: req.user.id
+        name,
+        email,
+        phone,
+        User_id: req.user.id,
     });
-    res.status(201).json(contact)
-})
+    res.status(201).json(contact);
+});
+
                                                                                                                                                                                                                                         
 //@desc update contact
 //@route PUT /api/contacts/:id
